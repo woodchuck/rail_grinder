@@ -1,14 +1,30 @@
-## Install
+# RailGrinder
 
-You will need cmake installed to compile the rugged gem's included version of libgit2.
+If you have a fleet of apps, this tool can help you manage the gem versions they use.
 
-    $ git clone ...
-    $ cd rail_grinder
-    $ bundle install
+## Installation
+
+You will need cmake installed to compile the `rugged` gem's included version of libgit2.
+
+    $ gem install rail_grinder
+
+## Usage
+
+TODO: Write usage instructions here
+
+## Development
+
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+
+To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Todo
 
- * Make into a gem
- * put rg on the PATH
- * specs!!
- * Example docs
+ * specs!
+ * save and restore
+ * make gitlab project public
+
+## License
+
+The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+

@@ -1,2 +1,12 @@
 .byebug_history
 *.swp
+/.bundle/
+/.yardoc
+/Gemfile.lock
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/repos/
+/spec/reports/
+/tmp/

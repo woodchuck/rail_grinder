@@ -1,7 +1,4 @@
-# A sample Gemfile
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem "awesome_print"
-gem "byebug"
-gem "rspec"
-gem "rugged"
+# Specify your gem's dependencies in rail_grinder.gemspec
+gemspec
