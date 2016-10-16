@@ -9,11 +9,21 @@ require 'readline'
 # require 'rugged'
 
 module RailGrinder
-
   REPO_DIR = 'repos'
+  STATE_FILE = '.rail_grinder'
+
+  def RailGrinder.show_help
+    puts "TODO: Actually put the help here"
+  end
 
   def RailGrinder.run
-    project = Project.new(repo_dir: REPO_DIR)
+    # If there is saved project state, load it.
+    # Otherwise create a new project.
+    project = if File.exist?(STATE_FILE)
+                Marshal.load( File.read(STATE_FILE) )
+              else
+                Project.new(repo_dir: REPO_DIR)
+              end
 
     # Drop the user in a prompt and process commands as they are entered
     prompt = 'rg> '
@@ -32,12 +42,15 @@ module RailGrinder
         prompt = "rg #{target_gem}@#{target_version}> "
       when 'status'
         project.show_status
+      when 'help'
+        RailGrinder.show_help
       when /exit|quit/
+        project.save_state
         puts "Goodbye..."
         break
       else
         puts "I'm sorry, I don't know about that command"
-        # TODO: Print help
+        RailGrinder.show_help
       end
     end
 
@@ -45,5 +58,4 @@ module RailGrinder
     # Clean out after testing...
     # `rm -rf repos/{*,.*}
   end
-
 end

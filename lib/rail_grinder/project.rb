@@ -8,6 +8,7 @@ module RailGrinder
       @repo_dir = opt[:repo_dir]
       @target_gem = nil
       @target_version = nil
+      load_state
 
       # Load configuration file if it exists.
 
@@ -20,16 +21,23 @@ module RailGrinder
       end
     end
 
+    # Add a git repository to the project.
     def add_repo(url)
       @repos = Repository.new(url, @repo_dir)
     end
 
+    # Set the target gem that we want to update to the latest version in all
+    # the repositories in the project.
     def set_target(gem, version)
       # TODO: validate
       @target_gem = gem
       @target_version = version
     end
 
+    # Show the current status of all the repositories in the project. Show
+    # the version of the target gem, whether tests have passed or failed,
+    # whether the update has been committed, pushed, deployed, etc. in each
+    # repository.
     def show_status
       # TODO: Iterate @repos instead?
       puts "You want '#{@target_gem}' at version #{@target_version}. Currently it's at:"
@@ -49,5 +57,8 @@ module RailGrinder
       end
     end
 
+    def save_state
+      open(RailGrinder::STATE_FILE, 'wb') { |f| f.puts Marshal.dump(self) }
+    end
   end
 end

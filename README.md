@@ -1,6 +1,6 @@
 # RailGrinder
 
-If you have a fleet of apps, this tool can help you manage the gem versions they use.
+A [rail grinder](https://en.wikipedia.org/wiki/Railgrinder) grinds worn railroad rails to have a consistent profile. If you have a fleet of apps, this tool can help you manage the gem versions they use.
 
 ## Installation
 
@@ -20,9 +20,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Todo
 
- * specs!
- * save and restore
- * make gitlab project public
+ * update prompt on restore
 
 ## License
 
