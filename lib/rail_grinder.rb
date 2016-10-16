@@ -22,7 +22,7 @@ module RailGrinder
     project = if File.exist?(STATE_FILE)
                 Marshal.load( File.read(STATE_FILE) )
               else
-                Project.new(repo_dir: REPO_DIR)
+                Project.new
               end
 
     # Drop the user in a prompt and process commands as they are entered

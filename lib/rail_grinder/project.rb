@@ -2,10 +2,9 @@ require "rail_grinder/repository"
 
 module RailGrinder
   class Project
-
-    def initialize(opt)
+    def initialize
       @repos = []
-      @repo_dir = opt[:repo_dir]
+      @repo_dir = RailGrinder::REPO_DIR
       @target_gem = nil
       @target_version = nil
       load_state
