@@ -37,9 +37,10 @@ module RailGrinder
     def show_status
       # TODO: Iterate @repos instead?
       puts "You want '#{@target_gem}' at version #{@target_version}. Currently it's at:"
+      proj_dir = Dir.pwd
       Dir.glob("#{@repo_dir}/*/Gemfile.lock").sort.each do |gemfile|
         app_dir = File.dirname(gemfile)
-        Dir.chdir(app_dir)
+        Dir.chdir(File.join(proj_dir, app_dir))
         lockfile = Bundler::LockfileParser.new(
           Bundler.read_file(File.basename(gemfile))
         )
