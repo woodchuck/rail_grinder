@@ -7,9 +7,6 @@ module RailGrinder
       @repo_dir = RailGrinder::REPO_DIR
       @target_gem = nil
       @target_version = nil
-      load_state
-
-      # Load configuration file if it exists.
 
       if Dir.exist?(@repo_dir)
         puts "Repositories will be cloned to the existing './#{@repo_dir}' directory."
