@@ -31,7 +31,8 @@ module RailGrinder
 
     # Add a git repository to the project.
     def add_repo(url)
-      @repos = Repository.new(url, @repo_dir)
+      # TODO: Test if repo already exists.
+      @repos << Repository.new(url, @repo_dir)
     end
 
     # Set the target gem that we want to update to the latest version in all
@@ -39,7 +40,7 @@ module RailGrinder
     def set_target(gem, version)
       # TODO: validate
       @target_gem = gem
-      @target_version = version
+      @target_version = Gem::Version.new(version)
     end
 
     def get_target
@@ -51,23 +52,31 @@ module RailGrinder
     # whether the update has been committed, pushed, deployed, etc. in each
     # repository.
     def show_status
-      # TODO: Iterate @repos instead?
       puts "You want '#{@target_gem}' at version #{@target_version}. Currently it's at:"
-      proj_dir = Dir.pwd
-      Dir.glob("#{@repo_dir}/*/Gemfile.lock").sort.each do |gemfile|
-        app_dir = File.dirname(gemfile)
-        Dir.chdir(File.join(proj_dir, app_dir))
-        lockfile = Bundler::LockfileParser.new(
-          Bundler.read_file(File.basename(gemfile))
-        )
-
-        lockfile.specs.each do |s|
-          if s.name == @target_gem
-            puts "#{s.version.to_s} : #{app_dir}"
-            break
-          end
+      @repos.each do |repo|
+        puts "%s : %s" % [repo.version(@target_gem), repo.path]
+      end
+    end
+    
+    # Attempt to update all repos to have the specified gem at the specified
+    # version including:
+    #  - bundle update
+    #  TODO:
+    #  https://github.com/state-machines/state_machines
+    #  - run and pass tests
+    #  - commit
+    #  - push
+    #  - deploy
+    def update
+      @repos.each do |repo|
+        if repo.version(@target_gem) < @target_version
+          puts "Bundle updating #{@target_gem} in #{repo.path}..."
+          repo.bundle_update(@target_gem)
+        else 
+          puts "#{@target_gem} is already up-to-date in #{repo.path}."
         end
       end
+      show_status
     end
 
     def save_state

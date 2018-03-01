@@ -17,6 +17,8 @@ module RailGrinder
   # Represent a git repository. Handle cloning a repo into a project, and once
   # it's there, performing commits and pushes.
   class Repository
+    attr_accessor :path
+
     def initialize(url, repo_dir)
       unless url
         raise "Please provide the url to a git repository.\n eg. $ rg.rb add git@gitlab.com:lycoperdon/foo.git"
@@ -25,7 +27,36 @@ module RailGrinder
       @path = "#{repo_dir}/#{RailGrinder.inferred_name(@url)}"
 
       system "git clone #{@url} #{@path}"
-      # Make sure the clone call went Ok
+      check_syscall_status
+    end
+
+    # Return the bundled version of the given gem as a Gem::Version.
+    def version(gem)
+      Dir.chdir(@path)
+      lockfile = Bundler::LockfileParser.new(
+        Bundler.read_file('Gemfile.lock')
+      )
+
+      lockfile.specs.each do |s|
+        if s.name == gem
+          return s.version
+        end
+      end
+      raise "Gem #{gem} not found in #{@path}"
+    end
+
+    # Bundle update the given gem conservatively in the repo dir.
+    def bundle_update(gem)
+      # Break out of rail_grinder's bundler env.
+      Bundler.with_clean_env do
+        Dir.chdir(@path) do
+          system "bundle update --patch #{gem}"
+          check_syscall_status
+        end
+      end
+    end
+
+    def check_syscall_status
       if $CHILD_STATUS.signaled?
         puts "!! child died with signal %d, %s coredump" % [$CHILD_STATUS.termsig, $CHILD_STATUS.coredump? ? 'with' : 'without']
       elsif $CHILD_STATUS.exitstatus != 0

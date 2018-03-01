@@ -30,6 +30,8 @@ module RailGrinder
           update_prompt
         when 'status'
           @project.show_status
+        when 'update'
+          @project.update
         when 'help'
           show_help
         when /exit|quit/
