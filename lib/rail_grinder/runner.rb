@@ -14,7 +14,7 @@ module RailGrinder
       @project = RailGrinder::Project.get
 
       # Drop the user in a prompt and process commands as they are entered
-      set_prompt
+      update_prompt
       while line = Readline.readline(@prompt, true)
         args = line.split
         command = args.shift
@@ -27,7 +27,7 @@ module RailGrinder
           # rg> target rails 4.2.7
           (target_gem, target_version) = *args
           @project.set_target(target_gem, target_version)
-          set_prompt
+          update_prompt
         when 'status'
           @project.show_status
         when 'help'
@@ -49,7 +49,7 @@ module RailGrinder
 
     private
 
-    def set_prompt
+    def update_prompt
       (gem, version) = @project.get_target
       gem ||= ''
       version ||= ''
