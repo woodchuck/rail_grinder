@@ -2,6 +2,17 @@ require "rail_grinder/repository"
 
 module RailGrinder
   class Project
+    # If there is saved project state, load it.
+    # Otherwise create a new project.
+    def Project.get
+      if File.exist?(RailGrinder::STATE_FILE)
+        puts 'Loading state from ' + RailGrinder::STATE_FILE
+        YAML.load( File.read(RailGrinder::STATE_FILE) )
+      else
+        Project.new
+      end
+    end
+
     def initialize
       @repos = []
       @repo_dir = RailGrinder::REPO_DIR
@@ -55,7 +66,8 @@ module RailGrinder
     end
 
     def save_state
-      open(RailGrinder::STATE_FILE, 'wb') { |f| f.puts Marshal.dump(self) }
+      puts 'Saving state to ' + RailGrinder::STATE_FILE
+      File.write(RailGrinder::STATE_FILE, YAML.dump(self))
     end
   end
 end

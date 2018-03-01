@@ -2,9 +2,12 @@
 
 A [rail grinder](https://en.wikipedia.org/wiki/Railgrinder) grinds worn railroad rails to have a consistent profile. If you have a fleet of apps, this tool can help you manage the gem versions they use.
 
-## Installation
+## Requirements
 
-You will need cmake installed to compile the `rugged` gem's included version of libgit2.
+ * You will need cmake installed to compile the `rugged` gem's included version of libgit2.
+ * Ruby >= 2.0
+
+## Installation
 
     $ gem install rail_grinder
 

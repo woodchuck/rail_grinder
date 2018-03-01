@@ -1,5 +1,6 @@
 require "rail_grinder/project"
 require "rail_grinder/version"
+require "yaml"
 
 # require 'awesome_print'
 # TODO: Don't load this as a matter of course
@@ -10,20 +11,14 @@ require 'readline'
 
 module RailGrinder
   REPO_DIR = 'repos'
-  STATE_FILE = '.rail_grinder'
+  STATE_FILE = "#{Dir.home}/.rail_grinder"
 
   def RailGrinder.show_help
     puts "TODO: Actually put the help here"
   end
 
   def RailGrinder.run
-    # If there is saved project state, load it.
-    # Otherwise create a new project.
-    project = if File.exist?(STATE_FILE)
-                Marshal.load( File.read(STATE_FILE) )
-              else
-                Project.new
-              end
+    project = RailGrinder::Project.get
 
     # Drop the user in a prompt and process commands as they are entered
     prompt = 'rg> '
