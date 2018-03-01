@@ -13,7 +13,21 @@ A [rail grinder](https://en.wikipedia.org/wiki/Railgrinder) grinds worn railroad
 
 ## Usage
 
-TODO: Write usage instructions here
+    $ exe/rg
+    Loading state from /home/steve/.rail_grinder
+    rg :> add git@github.com:user/snazzy.git
+    ...
+    rg :> target rails 4.2.10
+    rg rails:4.2.10> status
+    You want 'rails' at version 4.2.10. Currently it's at:
+    4.2.1 : /home/steve/.rail_grinder_repos/snazzy
+    rg rails:4.2.10> update
+    ...
+    You want 'rails' at version 4.2.10. Currently it's at:
+    4.2.10 : /home/steve/.rail_grinder_repos/snazzy
+    rg rails:4.2.10> exit
+    Saving state to /home/steve/.rail_grinder
+    Goodbye...
 
 ## Development
 
