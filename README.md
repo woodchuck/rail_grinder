@@ -37,7 +37,9 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Todo
 
- * update prompt on restore
+ * Run specs
+ * Commit
+ * Wrap this all up with a state machine
 
 ## License
 
