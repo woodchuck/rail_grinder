@@ -1,4 +1,5 @@
 require "rail_grinder/repository"
+require "yaml"
 
 module RailGrinder
   class Project
@@ -39,6 +40,10 @@ module RailGrinder
       # TODO: validate
       @target_gem = gem
       @target_version = version
+    end
+
+    def get_target
+      [@target_gem, @target_version]
     end
 
     # Show the current status of all the repositories in the project. Show

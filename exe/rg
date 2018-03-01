@@ -5,4 +5,5 @@ Bundler.setup
 
 require 'rail_grinder'
 
-RailGrinder.run
+rg = RailGrinder::Runner.new
+rg.run
